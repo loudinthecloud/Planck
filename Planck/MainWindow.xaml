@@ -1,0 +1,94 @@
+﻿<Window x:Class="Planck.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Planck"
+        Title="Planck" Height="400" Width="820" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen" >
+    <!-- Resources-->
+    <Window.Resources>
+        <local:SecToTimeConverter x:Key="SecToTimeConverter"/>
+    </Window.Resources>
+    
+    <!-- Show Progress in TaskBar -->
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="tbii" ProgressState="None" ProgressValue="0" />
+    </Window.TaskbarItemInfo>
+    
+    <!-- Controls -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu IsMainMenu="True" Style="{StaticResource ResourceKey=MenuStyle}" Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="Settings..." Name="menuSettings" Click="menuSettings_Click_1" />
+                <Separator />
+                <MenuItem Header="_Exit" Name="menuExit" Click="menuExit_Click_1" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About..." />
+            </MenuItem>
+        </Menu>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="1">
+            <Button Name="btnStartPause" Content="Start" Width="70" Height="70" Margin="5,0,5,0" Click="btnStartPause_Click" ToolTip="F5" />
+            <Button Name="btnStop" Content="Stop" Width="70" Height="70" Margin="5,0,5,0" Click="btnStop_Click" ToolTip="F6" />
+            <Label Name="lblTime" Content="none" FontSize="56" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#444" />
+        </StackPanel>
+        <Label Name="lblStatus" Content="Idle" FontWeight="Bold" Grid.Row="2" VerticalAlignment="Center" Background="AliceBlue" Foreground="#444" />
+        <ListView Name="lvHistory" VerticalContentAlignment="Stretch" Grid.Row="3" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding StartedDateFmt}" Width="80">
+                        <GridViewColumnHeader Content="Date" Tag="Date" Click="SortClick" />
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Start Time" DisplayMemberBinding="{Binding StartedTimeFmt}" Width="80" />
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Name}" Width="340" />
+                    <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding DurationS, Converter={StaticResource SecToTimeConverter}}" />
+                    <GridViewColumn Header="Breaks" DisplayMemberBinding="{Binding Breaks}" Width="50" />
+                    <GridViewColumn Header="Breaks Duration" DisplayMemberBinding="{Binding BreaksDurationS, Converter={StaticResource SecToTimeConverter}}" Width="120" />
+                </GridView>
+            </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete" Click="MenuItem_LV_Delete" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+        </ListView>
+        <StatusBar Grid.Row="4">
+            <StatusBarItem>
+                <TextBlock Text="Summary" FontWeight="Bold" Foreground="Black" />
+            </StatusBarItem>            
+            <StatusBarItem>
+                <TextBlock Name="tbSummaryTasks" Text="Summary" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock Name="tbSummaryWork" Text="Summary" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock Name="tbSummaryBreaksNum" Text="Summary" />
+            </StatusBarItem>
+            <Separator />            
+            <StatusBarItem>
+                <TextBlock Name="tbSummaryBreaks" Text="Summary" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalContentAlignment="Right">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Period:" VerticalAlignment="Center"/>
+                    <ComboBox Name="cbPeriod" Margin="15,0,5,0" SelectionChanged="cbPeriod_SelectionChanged_1">
+                        <ComboBoxItem Content="Yesterday" />
+                        <ComboBoxItem Content="Today" FontWeight="Bold" IsSelected="True" />
+                        <ComboBoxItem Content="Last 7 Days" />
+                        <ComboBoxItem Content="Last 30 Days" />
+                        <ComboBoxItem Content="All Time" />
+                    </ComboBox>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>

@@ -1,0 +1,12 @@
+﻿<Window x:Class="Planck.RealBreakWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Break..." Height="140" Width="250" ResizeMode="NoResize" Loaded="Window_Loaded_1" WindowStartupLocation="CenterScreen" Topmost="True">
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="tbii" ProgressState="None" ProgressValue="0" />
+    </Window.TaskbarItemInfo>
+    <StackPanel>
+        <Label FontWeight="Bold" Content="Take a break and rest..." Background="AliceBlue" Foreground="#444" />
+        <Label Name="lblTimeLeft" FontSize="54" HorizontalAlignment="Center" VerticalAlignment="Center" Content="00:00:00" Foreground="#444" />
+    </StackPanel>
+</Window>
