@@ -260,6 +260,7 @@ namespace Planck
                             RealBreakWindow rbw = new RealBreakWindow();
                             rbw.BreakMinutes = ShortBreakMinutes;
                             rbw.ShowDialog();
+                            playFX("aww.wav");
                             return;
                         }
 
